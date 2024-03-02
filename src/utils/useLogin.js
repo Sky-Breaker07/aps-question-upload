@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const loginUser = async (matricNumber, password) => {
     try {
-        const response = await axios.post('http://localhost:8800/api/v1/auth/login', {
+        const response = await axios.post('https://aps-website-backend.onrender.com/api/v1/auth/login', {
             matricNumber,
             password
         }, {
