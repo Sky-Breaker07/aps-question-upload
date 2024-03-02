@@ -19,19 +19,19 @@
                 <select v-model="selectedCourse" id="coursecode"
                     class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     <option v-for="course in courses" :value="course.coursecode">{{ course.coursecode }}: {{
-                        course.coursetitle }}
+                    course.coursetitle }}
                     </option>
                 </select>
             </div>
             <div class="mb-4">
                 <label for="question" class="block text-sm font-medium text-gray-700">Enter Question:</label>
-                <textarea v-model="question" id="question" rows="4" :class="{ 'border-red-500': errors.question }" required
-                    minlength="2"
+                <textarea v-model="question" id="question" rows="4" :class="{ 'border-red-500': errors.question }"
+                    required minlength="2"
                     class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
             </div>
             <div v-for="(option, index) in options" :key="index" class="mb-4 ">
                 <label :for="'option' + index" class="block text-sm font-medium text-gray-700">Option {{ index + 1
-                }}:</label>
+                    }}:</label>
                 <input v-model="options[index]" :id="'option' + index" type="text"
                     class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 <button v-if="index > 1" @click.prevent="removeOption(index)" type="button"
@@ -61,7 +61,8 @@
                     class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 <img :src="imgURL" class="w-64" />
                 <p class="text-sm text-gray-600" m-2>{{ imgURL }}</p>
-                <p v-if="successCloudinaryMessage" class="text-green-500 text-xs mt-1">{{ successCloudinaryMessage }}</p>
+                <p v-if="successCloudinaryMessage" class="text-green-500 text-xs mt-1">{{ successCloudinaryMessage }}
+                </p>
                 <p v-if="errorMessageCloudinary" class="text-red-500 text-xs mt-1">{{ errorMessageCloudinary }}</p>
             </div>
             <div class="mb-4">
@@ -82,6 +83,19 @@
             </div>
             <button type="submit" @click.prevent="handleSubmit"
                 class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Submit</button>
+            <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                <div class="bg-white rounded-lg p-6 shadow-xl">
+                    <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <p class="text-center mt-3">Please wait...</p>
+                </div>
+            </div>
             <p v-if="successMessage" class="text-green-500 text-2xl mt-1">{{ successMessage }}</p>
             <p v-if="errorMessage" class="text-red-500 text-2xl mt-1">{{ errorMessage }}</p>
         </div>
@@ -90,7 +104,7 @@
         </div>
     </div>
 </template>
-  
+
 <script setup>
 import { ref, watch, reactive, computed } from 'vue';
 import axios from 'axios';
@@ -100,7 +114,7 @@ import Course300L from '../courses/300L.json';
 import Course400L from '../courses/400L.json';
 import Course500L from '../courses/500L.json';
 
-
+const isLoading = ref(false);
 const selectedLevel = ref('100L');
 const imgURL = ref(null);
 const selectedCourse = ref('');
@@ -170,7 +184,8 @@ loadCourses();
 const uploadToCloudinary = async () => {
     const formData = new FormData();
     formData.append('file', imageFile.value);
-    formData.append('upload_preset', 'jkg6h2bu'); // Create an upload preset in Cloudinary
+    formData.append('upload_preset', 'jkg6h2bu');
+    isLoading.value = true;
     try {
         const response = await axios.post(
             `https://api.cloudinary.com/v1_1/dp4sbuifi/image/upload`,
@@ -180,11 +195,13 @@ const uploadToCloudinary = async () => {
                 transformations: 'w_400,h_400,c_fill'
             }
         );
+        isLoading.value = false;
         imgURL.value = response.data.secure_url;
         successCloudinaryMessage.value = 'Image uploaded successfully';
     } catch (error) {
         errorMessageCloudinary.value = error.response.data.message;
         console.error('Cloudinary upload error:', error);
+        isLoading.value = false;
     }
 };
 
@@ -212,6 +229,7 @@ const handleImageUpload = (event) => {
 }
 
 const resetForm = () => {
+    isLoading.value = false;
     selectedLevel.value = '100L';
     selectedCourse.value = '';
     question.value = '';
@@ -232,6 +250,7 @@ const resetForm = () => {
 };
 
 const handleSubmit = async () => {
+    isLoading.value = true;
     try {
         // Use axios to post data to API endpoint
         const token = localStorage.getItem('studentToken');
@@ -253,6 +272,7 @@ const handleSubmit = async () => {
             }
         );
         // Display success message
+        isLoading.value = false;
         successMessage.value = response.data.message || 'Question uploaded successfully';
         resetForm();
         setTimeout(() => {
@@ -260,7 +280,7 @@ const handleSubmit = async () => {
         }, 5000);
 
     } catch (error) {
-        console.log(error)
+        isLoading.value = false;
         errorMessage.value = error.response.data.message || 'An error occurred';
         resetForm();
         setTimeout(() => {
@@ -276,6 +296,7 @@ const addImage = () => {
     showImageInput.value = true;
 };
 </script>
-  
-<style>/* No need to add additional styles, Tailwind CSS classes used inline */</style>
-  
+
+<style>
+/* No need to add additional styles, Tailwind CSS classes used inline */
+</style>
