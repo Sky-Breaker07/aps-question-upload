@@ -143,6 +143,7 @@ loadCourses();
 watch(selectedLevel, loadCourses);
 
 const uploadToCloudinary = async () => {
+    isLoading.value = true;
     const formData = new FormData();
     formData.append('file', imageFile.value);
     formData.append('upload_preset', 'jkg6h2bu');
