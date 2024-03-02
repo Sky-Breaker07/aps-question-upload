@@ -1,7 +1,10 @@
 <template>
     <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-6" v-if="users.user.firstLogin">Welcome {{ users.user.fullName }}</h1>
-        <h1 class="text-2xl font-bold mb-6" v-if="!users.user.firstLogin">Welcome {{ users.user.firstName }} {{ users.user.middleName }} {{ users.user.lastName }}</h1>
+        <div v-if="users.user">
+        <h1 class="text-2xl font-bold mb-6 text-center" v-if="users.user.firstLogin">Welcome {{ users.user.fullName }}</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center" v-if="!users.user.firstLogin">Welcome {{ users.user.firstName }} {{ users.user.middleName }} {{ users.user.lastName }}</h1>
+        </div>
+        
         <!-- Tab Buttons -->
         <div class="flex mb-4 justify-center space-x-4">
             <button class="tab-btn" @click="selectedTab = 'mcq'" :class="{ 'active-tab': selectedTab === 'mcq' }">
@@ -22,7 +25,7 @@
         <!-- MCQ Question Component -->
         <transition name="fade">
             <div v-if="selectedTab === 'mcq'" class="question-container">
-                <h2 class="question-title">Multiple Choice Questions</h2>
+                <h2 class="question-title text-center">Multiple Choice Questions</h2>
                 <McqQuestions />
             </div>
         </transition>
@@ -30,7 +33,7 @@
         <!-- Cloze Question Component -->
         <transition name="fade">
             <div v-if="selectedTab === 'cloze'" class="question-container">
-                <h2 class="question-title">Cloze Questions</h2>
+                <h2 class="question-title text-center">Cloze Questions</h2>
                 <ClozeQuestions />
             </div>
         </transition>
@@ -38,7 +41,7 @@
         <!-- Essay Question Component -->
         <transition name="fade">
             <div v-if="selectedTab === 'essay'" class="question-container">
-                <h2 class="question-title">Essay Questions</h2>
+                <h2 class="question-title text-center">Essay Questions</h2>
                 <EssayQuestions />
             </div>
         </transition>
@@ -59,16 +62,11 @@ const selectedTab = ref('mcq');
 onBeforeMount(() => {
     console.log(users.user)
     if (!users) {
-        window.location.href = '/login';
-    }
-    if (!users.user){
-        window.location.href = '/login';
-    }
-    if (!users.user.isAcademicCommittee) {
-        window.location.href = '/unauthorized';
-    } else {
-        console.log('User is an academic committee member');
-        return
+        router.push('/login')
+    } else if (!users.user){
+        router.push('/login')   
+    } else if (!users.user.isAcademicCommittee) {
+        router.push('/unauthorized')
     }
 });
 
