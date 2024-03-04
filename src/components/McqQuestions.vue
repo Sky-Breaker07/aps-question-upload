@@ -84,7 +84,7 @@
             <button type="submit" @click.prevent="handleSubmit"
                 class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Submit</button>
             <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-                <div class="bg-white rounded-lg p-6 shadow-xl">
+                <div class="bg-white rounded-lg p-6 shadow-xl flex items-center justify-center">
                     <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
@@ -96,6 +96,7 @@
                     <p class="text-center mt-3">Please wait...</p>
                 </div>
             </div>
+
             <p v-if="successMessage" class="text-green-500 text-2xl mt-1">{{ successMessage }}</p>
             <p v-if="errorMessage" class="text-red-500 text-2xl mt-1">{{ errorMessage }}</p>
         </div>

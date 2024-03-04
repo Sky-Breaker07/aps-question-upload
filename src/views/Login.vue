@@ -31,7 +31,7 @@
                 </button>
             </form>
             <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-                <div class="bg-white rounded-lg p-6 shadow-xl">
+                <div class="bg-white rounded-lg p-6 shadow-xl flex items-center justify-center">
                     <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
@@ -43,6 +43,7 @@
                     <p class="text-center mt-3">Please wait...</p>
                 </div>
             </div>
+
         </div>
     </div>
 </template>

@@ -1,10 +1,12 @@
 <template>
     <div class="container mx-auto p-6">
         <div v-if="users.user">
-        <h1 class="text-2xl font-bold mb-6 text-center" v-if="users.user.firstLogin">Welcome {{ users.user.fullName }}</h1>
-        <h1 class="text-2xl font-bold mb-6 text-center" v-if="!users.user.firstLogin">Welcome {{ users.user.firstName }} {{ users.user.middleName }} {{ users.user.lastName }}</h1>
+            <h1 class="text-2xl font-bold mb-6 text-center" v-if="users.user.firstLogin">Welcome {{ users.user.fullName
+                }}</h1>
+            <h1 class="text-2xl font-bold mb-6 text-center" v-if="!users.user.firstLogin">Welcome {{
+            users.user.firstName }} {{ users.user.middleName }} {{ users.user.lastName }}</h1>
         </div>
-        
+
         <!-- Tab Buttons -->
         <div class="flex mb-4 justify-center space-x-4">
             <button class="tab-btn" @click="selectedTab = 'mcq'" :class="{ 'active-tab': selectedTab === 'mcq' }">
@@ -18,9 +20,10 @@
             </button>
         </div>
         <div class="flex justify-end mb-4">
-        <button @click="handleLogout"
-          class="text-red-500 font-bold hover:text-red-700 px-4 py-2 rounded-lg hover:border-red-500">Log Out</button>
-      </div>
+            <button @click="handleLogout"
+                class="text-red-500 font-bold hover:text-red-700 px-4 py-2 rounded-lg hover:border-red-500">Log
+                Out</button>
+        </div>
 
         <!-- MCQ Question Component -->
         <transition name="fade">
@@ -47,7 +50,7 @@
         </transition>
     </div>
 </template>
-  
+
 <script setup>
 import McqQuestions from '@/components/McqQuestions.vue';
 import ClozeQuestions from '@/components/ClozeQuestions.vue';
@@ -60,22 +63,21 @@ const users = useUserStore();
 const selectedTab = ref('mcq');
 
 onBeforeMount(() => {
-    console.log(users.user)
     if (!users) {
         router.push('/login')
-    } else if (!users.user){
-        router.push('/login')   
+    } else if (!users.user) {
+        router.push('/login')
     } else if (!users.user.isAcademicCommittee) {
         router.push('/unauthorized')
     }
 });
 
 const handleLogout = () => {
-  users.logout()
-  router.push('/login')
+    users.logout()
+    router.push('/login')
 }
 </script>
-  
+
 <style scoped>
 .tab-btn {
     padding: 10px 20px;
@@ -132,4 +134,3 @@ const handleLogout = () => {
     }
 }
 </style>
-  
