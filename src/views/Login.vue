@@ -49,7 +49,7 @@
 
 <script setup>
 import apsLogo from '@/assets/images/aps-logo.png'
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { loginUser } from '@/utils/useLogin'
 import { useUserStore } from '@/stores/UserStore'
 import router from '@/router';
@@ -59,6 +59,12 @@ const password = ref('');
 const isLoading = ref(false);
 const errorMessage = ref(null);
 const users = useUserStore()
+
+onBeforeMount(() => {
+    if (users.user) {
+        router.push('/uploadquestion')
+    }
+});
 
 const handleLogin = async () => {
     isLoading.value = true;
