@@ -60,7 +60,7 @@ import router from '@/router';
 import { onBeforeMount, ref } from 'vue';
 
 const users = useUserStore();
-const selectedTab = ref('mcq');
+const selectedTab = ref('essay');
 
 onBeforeMount(() => {
     if (!users) {
