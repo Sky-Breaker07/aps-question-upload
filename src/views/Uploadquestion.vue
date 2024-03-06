@@ -25,11 +25,11 @@
                 Out</button>
         </div>
 
-        <!-- MCQ Question Component -->
+        <!-- Essay Question Component -->
         <transition name="fade">
-            <div v-if="selectedTab === 'mcq'" class="question-container">
-                <h2 class="question-title text-center">Multiple Choice Questions</h2>
-                <McqQuestions />
+            <div v-if="selectedTab === 'essay'" class="question-container">
+                <h2 class="question-title text-center">Essay Questions</h2>
+                <EssayQuestions />
             </div>
         </transition>
 
@@ -40,12 +40,12 @@
                 <ClozeQuestions />
             </div>
         </transition>
-
-        <!-- Essay Question Component -->
+        
+        <!-- MCQ Question Component -->
         <transition name="fade">
-            <div v-if="selectedTab === 'essay'" class="question-container">
-                <h2 class="question-title text-center">Essay Questions</h2>
-                <EssayQuestions />
+            <div v-if="selectedTab === 'mcq'" class="question-container">
+                <h2 class="question-title text-center">Multiple Choice Questions</h2>
+                <McqQuestions />
             </div>
         </transition>
     </div>
