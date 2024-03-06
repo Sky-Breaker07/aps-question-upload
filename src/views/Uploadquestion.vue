@@ -9,14 +9,14 @@
 
         <!-- Tab Buttons -->
         <div class="flex mb-4 justify-center space-x-4">
-            <button class="tab-btn" @click="selectedTab = 'mcq'" :class="{ 'active-tab': selectedTab === 'mcq' }">
-                MCQ
+            <button class="tab-btn" @click="selectedTab = 'essay'" :class="{ 'active-tab': selectedTab === 'essay' }">
+                Essay
             </button>
             <button class="tab-btn" @click="selectedTab = 'cloze'" :class="{ 'active-tab': selectedTab === 'cloze' }">
                 Cloze (Fill in the blanks)
             </button>
-            <button class="tab-btn" @click="selectedTab = 'essay'" :class="{ 'active-tab': selectedTab === 'essay' }">
-                Essay
+            <button class="tab-btn" @click="selectedTab = 'mcq'" :class="{ 'active-tab': selectedTab === 'mcq' }">
+                MCQ
             </button>
         </div>
         <div class="flex justify-end mb-4">
@@ -40,7 +40,7 @@
                 <ClozeQuestions />
             </div>
         </transition>
-        
+
         <!-- MCQ Question Component -->
         <transition name="fade">
             <div v-if="selectedTab === 'mcq'" class="question-container">
