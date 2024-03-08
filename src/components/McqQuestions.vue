@@ -1,26 +1,26 @@
 <template>
-    <div class="container mx-auto py-8">
+    <form @submit.prevent="handleSubmit" class="container mx-auto py-8">
         <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-semibold mb-4">Upload Multiple Choice Question</h2>
             <div class="mb-4">
                 <label for="level" class="block text-sm font-medium text-gray-700">Select Level:</label>
                 <select v-model="selectedLevel" id="level"
-                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    required>
                     <option value="100L">100L</option>
                     <option value="200L">200L</option>
                     <option value="300L">300L</option>
                     <option value="400L">400L</option>
                     <option value="500L">500L</option>
-                    <!-- Add options for other levels -->
                 </select>
             </div>
             <div class="mb-4">
                 <label for="coursecode" class="block text-sm font-medium text-gray-700">Select Course:</label>
                 <select v-model="selectedCourse" id="coursecode"
-                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    required>
                     <option v-for="course in courses" :value="course.coursecode">{{ course.coursecode }}: {{
-                    course.coursetitle }}
-                    </option>
+        course.coursetitle }}</option>
                 </select>
             </div>
             <div class="mb-4">
@@ -29,11 +29,12 @@
                     required minlength="2"
                     class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
             </div>
-            <div v-for="(option, index) in options" :key="index" class="mb-4 ">
+            <div v-for="(option, index) in options" :key="index" class="mb-4">
                 <label :for="'option' + index" class="block text-sm font-medium text-gray-700">Option {{ index + 1
                     }}:</label>
                 <input v-model="options[index]" :id="'option' + index" type="text"
-                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    required>
                 <button v-if="index > 1" @click.prevent="removeOption(index)" type="button"
                     class="text-red-500 text-sm mt-1">Remove Option</button>
             </div>
@@ -52,8 +53,7 @@
             </div>
             <div class="mb-4">
                 <button @click.prevent="addImage"
-                    class="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600">Add
-                    Image</button>
+                    class="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600">Add Image</button>
             </div>
             <div v-if="showImageInput" class="mb-4">
                 <label for="image" class="block text-sm font-medium text-gray-700">Upload Image:</label>
@@ -81,7 +81,7 @@
                     class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 <p class="text-xs text-gray-500">Separate tags by comma (,)</p>
             </div>
-            <button type="submit" @click.prevent="handleSubmit"
+            <button type="submit"
                 class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600">Submit</button>
             <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
                 <div class="bg-white rounded-lg p-6 shadow-xl flex items-center justify-center">
@@ -96,15 +96,12 @@
                     <p class="text-center mt-3">Please wait...</p>
                 </div>
             </div>
-
             <p v-if="successMessage" class="text-green-500 text-2xl mt-1">{{ successMessage }}</p>
             <p v-if="errorMessage" class="text-red-500 text-2xl mt-1">{{ errorMessage }}</p>
         </div>
-        <div>
-
-        </div>
-    </div>
+    </form>
 </template>
+
 
 <script setup>
 import { ref, watch, reactive, computed } from 'vue';
@@ -150,9 +147,9 @@ const removeOption = (index) => {
     errors.options.splice(index, 1);
 };
 
-const hasErrors = computed(() => {
-    return Object.values(errors).some(error => error) || errors.options.some(optionError => optionError);
-});
+// const hasErrors = computed(() => {
+//     return Object.values(errors).some(error => error) || errors.options.some(optionError => optionError);
+// });
 
 
 const hasCorrectOption = computed(() => {
