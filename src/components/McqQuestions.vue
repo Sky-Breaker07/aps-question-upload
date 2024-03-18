@@ -228,8 +228,8 @@ const handleImageUpload = (event) => {
 
 const resetForm = () => {
     isLoading.value = false;
-    selectedLevel.value = '100L';
-    selectedCourse.value = '';
+    // selectedLevel.value = '100L';
+    // selectedCourse.value = '';
     question.value = '';
     correctOptions.value = [];
     options.value = ['', ''];
