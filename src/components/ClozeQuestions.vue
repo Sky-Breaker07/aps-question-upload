@@ -30,8 +30,8 @@
             </div>
             <div class="mb-4">
                 <label for="answer" class="block text-sm font-medium text-gray-700">Enter Answer:</label>
-                <input v-model="answer" id="answer" type="text"
-                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <textarea v-model="answer" id="answer" type="text"
+                    class="mt-1 block w-full border-gray-300 border-2 border-solid rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
             </div>
             <div class="mb-4">
                 <button @click="addImage" class="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600">Add
