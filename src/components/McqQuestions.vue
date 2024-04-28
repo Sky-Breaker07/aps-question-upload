@@ -258,7 +258,7 @@ const handleSubmit = async () => {
             question: question.value,
             year: year.value,
             lecturer: lecturer.value,
-            options: options.value.join(',').split(',').map((option) => option.trim()),
+            options: options.value,
             answer: correctOptions.value.join(',').split(',').map((answer) => answer.trim()),
             imgURL: imgURL.value,
             tags: tags.value ? tags.value.split(',') : [],
