@@ -227,14 +227,15 @@ const handleImageUpload = (event) => {
 }
 
 const resetForm = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     isLoading.value = false;
     // selectedLevel.value = '100L';
     // selectedCourse.value = '';
     question.value = '';
     correctOptions.value = [];
     options.value = ['', ''];
-    year.value = '';
-    lecturer.value = '';
+    // year.value = '';
+    // lecturer.value = '';
     tags.value = '';
     imgURL.value = null;
     showImageInput.value = false;
